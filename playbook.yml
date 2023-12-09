@@ -1,0 +1,19 @@
+- name: Deploy Spark container to contabo
+  hosts: host
+  remote_user: "{{ lookup('env', 'REMOTE_USER') }}"
+  tasks:
+  - name: remove spark-container folder
+    ansible.builtin.file:
+      path: spark-container
+      state: absent
+
+  - name: Pull git repo
+    ansible.builtin.git:
+      repo: git@github.com:oneworldanalytics/spark-container.git
+      dest: spark-container
+
+  - name: run docker-compose up
+    shell: |
+      set -e
+      cd spark-container
+      docker-compose up -d --build

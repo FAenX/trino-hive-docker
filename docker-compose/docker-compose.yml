@@ -1,5 +1,16 @@
 version: '3.7'
 services:
+  trino-hive-spark:
+    image: jupyter/pyspark-notebook:x86_64-spark-3.5.0
+    volumes:
+      - ${HOME}:/home/jovyan/work
+      - ${HOME}/.ssh:/home/jovyan/.ssh
+      - $PWD/jupyter_notebook_config.json:/home/jovyan/.jupyter/jupyter_notebook_config.json
+    working_dir: /home/jovyan/work
+    depends_on:
+      - metastore-standalone
+      - mysql
+
   trino-coordinator:
     image: 'trinodb/trino:latest'
     hostname: trino-coordinator
@@ -26,7 +37,8 @@ services:
       - trino-network
 
   hive-metastore:
-    image: 'my-hive-metastore:latest'
+    build:
+      context: .
     hostname: hive-metastore
     ports:
       - '9083:9083' # Metastore Thrift
