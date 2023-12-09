@@ -9,7 +9,7 @@ services:
     working_dir: /home/jovyan/work
     depends_on:
       - hive-metastore
-      - mysql
+      - minio
 
   trino-coordinator:
     image: 'trinodb/trino:latest'
