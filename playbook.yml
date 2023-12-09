@@ -1,19 +1,19 @@
-- name: Deploy Spark container to contabo
+- name: Deploy trino-hive-docker
   hosts: host
   remote_user: "{{ lookup('env', 'REMOTE_USER') }}"
   tasks:
-  - name: remove spark-container folder
+  - name: remove trino-hive-docker folder
     ansible.builtin.file:
-      path: spark-container
+      path: trino-hive-docker
       state: absent
 
   - name: Pull git repo
     ansible.builtin.git:
-      repo: git@github.com:oneworldanalytics/spark-container.git
-      dest: spark-container
+      repo: git@github.com:FAenX/trino-hive-docker.git
+      dest: trino-hive-docker
 
   - name: run docker-compose up
     shell: |
       set -e
-      cd spark-container
+      cd trino-hive-docker/docker-compose
       docker-compose up -d --build
