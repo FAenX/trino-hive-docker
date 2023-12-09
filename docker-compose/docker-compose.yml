@@ -6,6 +6,8 @@ services:
       - ${HOME}:/home/jovyan/work
       - ${HOME}/.ssh:/home/jovyan/.ssh
       - $PWD/jupyter_notebook_config.json:/home/jovyan/.jupyter/jupyter_notebook_config.json
+    environment:
+      - JUPYPER_TOKEN=""
     working_dir: /home/jovyan/work
     depends_on:
       - hive-metastore
