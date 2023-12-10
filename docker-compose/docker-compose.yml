@@ -1,13 +1,12 @@
 version: '3.7'
 services:
   trino-hive-spark:
-    image: jupyter/pyspark-notebook:x86_64-spark-3.5.0
+    build:
+      context: spark
     volumes:
       - ${HOME}:/home/jovyan/work
       - ${HOME}/.ssh:/home/jovyan/.ssh
       - $PWD/jupyter_notebook_config.json:/home/jovyan/.jupyter/jupyter_notebook_config.json
-    environment:
-      - JUPYPER_TOKEN=""
     working_dir: /home/jovyan/work
     depends_on:
       - hive-metastore
@@ -40,7 +39,7 @@ services:
 
   hive-metastore:
     build:
-      context: .
+      context: metastore
     hostname: hive-metastore
     ports:
       - '9083:9083' # Metastore Thrift
