@@ -6,11 +6,12 @@ services:
     volumes:
       - ${HOME}:/home/jovyan/work
       - ${HOME}/.ssh:/home/jovyan/.ssh
-      - $PWD/jupyter_notebook_config.json:/home/jovyan/.jupyter/jupyter_notebook_config.json
+      # - $PWD/jupyter_notebook_config.json:/home/jovyan/.jupyter/jupyter_notebook_config.json
     working_dir: /home/jovyan/work
     depends_on:
       - hive-metastore
       - minio
+    command: ["jupyter", "notebook", "--ip='*'", "--NotebookApp.token=''", "--NotebookApp.password=''"]
 
   trino-coordinator:
     image: 'trinodb/trino:latest'
@@ -40,7 +41,6 @@ services:
   hive-metastore:
     build:
       context: metastore
-    hostname: hive-metastore
     ports:
       - '9083:9083' # Metastore Thrift
     volumes:
