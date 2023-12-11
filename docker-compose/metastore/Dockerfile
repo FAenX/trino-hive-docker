@@ -22,7 +22,7 @@ RUN curl -L https://downloads.apache.org/hive/hive-standalone-metastore-${METAST
     rm -rf postgresql-42.4.0.jar && \
     rm -rf hive-exec-${METASTORE_VERSION}.jar
 
-COPY scripts/entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 # COPY ./hive-exec-3.0.0.jar ${HIVE_HOME}/lib/
 
 
